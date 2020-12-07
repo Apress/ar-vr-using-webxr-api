@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="x-ua-compatible IE=edge"/> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>WebXR API: Ch.10 Ex.9</title>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.min.js"></script>
+    
+</head>
+<body>
+    <a-scene>
+        <!-- Asset Management System-->
+        <a-assets>
+          <a-asset-item id="dragon" src="./assets/dragon/scene.gltf"></a-asset-item>
+          <a-asset-item id="city" src="./assets/city/scene.gltf"></a-asset-item>
+        </a-assets>
+        
+        <!--City GLTF model-->
+        <a-entity gltf-model="#city" 
+        rotation="0 -90 0" 
+        scale="0.0005 0.0005 0.0005"  
+        position=".07 1 -.5"
+        ></a-entity>
+
+        <!--Dragon GLTF model-->
+        <a-entity gltf-model="#dragon"
+        scale="1 1 1"
+        rotation="0 270 0"
+        position="0.5 1.02 -0.7"
+        animation-mixer
+        ></a-entity>
+        
+    </a-scene>
+</body>
+
+</html>

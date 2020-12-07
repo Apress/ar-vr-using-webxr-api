@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebXR API / A-Frame: Ch.8 Ex.7 Pts. 3 & 4</title>
+    <head>
+        <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+        <script>
+            AFRAME.registerComponent('texture-loader', {
+                schema: {
+                    src: {},
+                    material_tex: {},
+                    mesh: {},
+                    texture: {},
+                    normal: {type: "boolean"},
+                    normal_src: {},
+                    wrap: {type: "boolean", default: false},
+                    repeat: {type: "boolean", default: false}
+                },
+                init: function () {
+                    console.log('initialized');
+                },
+                update: function () {
+                    this.data.texture = new THREE.TextureLoader().load(
+                        this.data.src
+                    );
+
+                    this.data.texture.anisotropy = 16;
+                    this.data.texture.minFilter = THREE.NearestFilter;
+                    this.data.texture.maxFilter = THREE.NearestFilter;
+                    this.data.material_tex = new THREE.MeshLambertMaterial( {map: this.data.texture} );
+                    const el = this.el;
+                    this.data.mesh = el.getObject3D('mesh');
+                    this.data.mesh.material = this.data.material_tex;
+
+                    if (this.data.normal == true) {
+                        console.log('normal true');
+                        this.data.normal_map = new THREE.TextureLoader().load(
+                            this.data.normal_src
+                    );
+                        this.data.mesh.material.normalMap = this.data.normal_map;
+                        this.data.mesh.receiveShadow = true;
+                    }
+
+                    if (this.data.wrap === true && this.data.repeat === true) {
+                        this.data.texture.wrapS = this.data.texture.wrapT = THREE.RepeatWrapping;
+                        this.data.texture.repeat.set(25, 25);   
+                    }
+                }
+            });
+        </script>
+    </head>
+</head>
+<body>
+    <a-scene fog="type: exponential; density: 0.1; color: #cce0ff">
+        <a-entity id="dir-light" light="type: directional; color: #dfebff; intensity: 1" position="50 200 100"></a-entity>
+        <a-entity light="type: ambient; color: #666666"></a-entity>
+        <a-plane id="ground" 
+                 texture-loader="src: textures/grass.jpg; normal: true; normal_src: textures/grass-nm.jpg; wrap: true; repeat: true"
+                 height="50" width="50" 
+                 rotation="-90 0 0"
+        ></a-plane>
+        <a-box texture-loader="src: textures/brick_mat.jpg"
+               position="0.3 1.5 -0.5"
+               depth="0.5" height="0.5" width="0.5"
+        ></a-box>
+        <a-sky color="#87CEEB"></a-sky>
+    </a-scene>
+</body>
+</html>

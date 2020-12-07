@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A-Frame: Physics, Ex. 8 -- Part 1</title>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v4.0.1/dist/aframe-physics-system.min.js"></script>    
+    <script src="https://unpkg.com/super-hands@3.0.0/dist/super-hands.min.js"></script>
+    <script src="https://unpkg.com/aframe-physics-extras@0.1.2/dist/aframe-physics-extras.min.js"></script>
+</head>
+</head>
+<body>
+    <a-scene physics="debug: false">
+        <a-assets>
+            <a-mixin id="controller"
+                physics-collider            
+                static-body="shape: sphere; sphereRadius: 0.02"
+                super-hands="colliderEvent: collisions;
+                            colliderEventProperty: els;
+                            colliderEndEvent: collisions;
+                            colliderEndEventProperty: clearedEls"
+                collision-filter = "group: hands;
+                                    collidesWith: blue;
+                                    collisionForces: false">
+            </a-mixin>
+            <a-mixin id="cube" dynamic-body grabbable
+                geometry="primitive: box; width: 0.5; height: 0.5; depth: 0.5">
+            </a-mixin>
+        </a-assets>
+       
+        <a-camera position="0 0.3 0"></a-camera>
+
+        <a-entity oculus-touch-controls="hand: left"
+        model: true
+        mixin="controller">
+        </a-entity>
+
+        <a-entity oculus-touch-controls="hand: right"
+        model: true
+        mixin="controller">
+        </a-entity>
+
+        <a-plane material="color: gray" width="25" height="25" rotation="-90 0 0" position="0 0.2 0" static-body
+        collision-filter="collidesWith: blue" physics-collider
+        ></a-plane>
+
+        <a-sphere static-body position="-5 12 -6" material="color: yellow" radius="2"></a-sphere> 
+        
+        <a-entity mixin="cube" position="0.5 10 -0.5" material="color: blue" sleepy
+            collision-filter="group: blue; collidesWith: default, red, hands">
+        </a-entity>
+        
+        <!-- <a-box dynamic-body grabbale position="0.5 50 -0.5" material="color: blue"
+                width="0.5" height="0.5" depth="0.5"
+                collision-filter="group: blue; collidesWith: default, hands">
+        </a-box> -->
+
+    </a-scene>
+</body>
+</html>
+<!--
+    <script src="https://unpkg.com/aframe-physics-extras@0.1.2/dist/aframe-physics-extras.min.js"></script>
+     physics-collider collision-filter="collidesWith: default" 
+
+-->

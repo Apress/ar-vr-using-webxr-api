@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebXR API / A-Frame: Ch.8 Ex.7 Pts.1 & 2</title>
+    <head>
+        <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    </head>
+</head>
+<body>
+    
+    <a-scene>
+
+        <a-entity geometry="primitive: plane; height: 10; width: 10" rotation="-90 0 0" material="side: double color: #fff"></a-entity>
+        <a-box id="cubrick" position="0.3 1.5 -0.5" depth="0.5" height="0.5" width="0.5"></a-box>
+        <a-sky color="#87CEEB"></a-sky>
+    </a-scene>
+</body>
+<script type="text/javascript">
+    const texture = new window.THREE.TextureLoader().load(
+            'textures/brick_mat.jpg');
+    
+    texture.anisotropy = 16;
+    texture.minFilter = THREE.NearestFilter;
+    texture.maxFilter = THREE.NearestFilter
+    //texture.encoding = THREE.sRGBEncoding;
+    const material_tex = new THREE.MeshBasicMaterial( {map: texture});
+    const box = document.querySelector('#cubrick');
+    const mesh = box.getObject3D('mesh');
+    
+    mesh.material = material_tex;
+    
+</script>
+</html>
